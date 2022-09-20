@@ -4,6 +4,7 @@ import com.training.program.finalproject2.dto.AddressCustomerDto;
 import com.training.program.finalproject2.entity.Address;
 import com.training.program.finalproject2.entity.AddressCustomer;
 import com.training.program.finalproject2.entity.Customer;
+import com.training.program.finalproject2.exception.EntityAlreadyExits;
 import com.training.program.finalproject2.exception.NotFoundException;
 import com.training.program.finalproject2.mapper.AddressCustomerMapper;
 import com.training.program.finalproject2.repository.AddressCustomerRepository;
@@ -11,6 +12,7 @@ import com.training.program.finalproject2.repository.AddressRepository;
 import com.training.program.finalproject2.repository.CustomerRepository;
 import com.training.program.finalproject2.service.interfaces.AddressCustomerService;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -52,10 +54,33 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
             Address address = addressRepository.getReferenceById(addressCustomerDto.getIdAddress());
             Customer customer = customerRepository.getReferenceById(addressCustomerDto.getIdCustomer());
 
+            checkEntity(address, customer);
+
+            List<AddressCustomer> list = addressCustomerRepository.findByCustomer(customer);
             AddressCustomer addressCustomer = addressCustomerMapper.addressCustomerDtoToAddressCustomerEntity(addressCustomerDto, address, customer);
+
+            if (list.isEmpty()){
+                addressCustomer.setSelectedAddress(true);
+            } else {
+                addressCustomer.setSelectedAddress(false);
+            }
             return addressCustomerRepository.save(addressCustomer);
-        } catch (EntityNotFoundException e){
-            throw new NotFoundException("Couldn't find an address or customer with the given IDs");
+        } catch (Exception e){
+            if (e.getClass() == DataIntegrityViolationException.class) {
+                throw new EntityNotFoundException("Couldn't find an address or customer with the given IDs");
+            } else {
+                throw new EntityAlreadyExits("Customer already has this address");
+            }
+        }
+    }
+
+    private void checkEntity(Address address, Customer customer){
+        try{
+            if(addressCustomerRepository.findByCustomerAndAddress(customer, address) != null) {
+                throw new EntityAlreadyExits("User already has that address");
+            }
+        } catch (Exception e){
+            throw new EntityAlreadyExits("Couldn't find an address or customer with the given IDs");
         }
     }
 
@@ -65,13 +90,13 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
             Address address = addressRepository.getReferenceById(addressCustomerDto.getIdAddress());
             Customer customer = customerRepository.getReferenceById(addressCustomerDto.getIdCustomer());
             AddressCustomer addressCustomer = addressCustomerRepository.getReferenceById(id);
-            addressCustomer.setActive(addressCustomerDto.isActive());
+            addressCustomer.setSelectedAddress(addressCustomerDto.isActive());
             addressCustomer.setCustomer(customer);
             addressCustomer.setAddress(address);
 
             return addressCustomerRepository.save(addressCustomer);
         } catch (EntityNotFoundException e){
-            throw new NotFoundException("Couldn't find an address or customer with the given IDs");
+            throw new EntityNotFoundException("Couldn't find an address or customer with the given IDs");
         }
     }
 
@@ -80,6 +105,22 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
         try{
             addressCustomerRepository.deleteById(id);
         }catch (Exception e){
+            throw new EntityNotFoundException("Couldn't find an addressCustomer with the given id");
+        }
+    }
+
+    @Override
+    public void setActiveAddressCustomer(int id) throws NotFoundException {
+        try {
+            AddressCustomer oldAddress = addressCustomerRepository.findBySelectedAddressTrue();
+            oldAddress.setSelectedAddress(false);
+
+            AddressCustomer newAddress = addressCustomerRepository.getReferenceById(id);
+            newAddress.setSelectedAddress(true);
+
+            addressCustomerRepository.save(oldAddress);
+            addressCustomerRepository.save(newAddress);
+        } catch (Exception e){
             throw new NotFoundException("Couldn't find an addressCustomer with the given id");
         }
     }

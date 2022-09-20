@@ -19,4 +19,6 @@ public interface AddressCustomerService {
     AddressCustomer updateAddressCustomer(AddressCustomerDto addressCustomerDto, int id) throws NotFoundException;
 
     void deleteAddressCustomerById(int id) throws NotFoundException;
+
+    void setActiveAddressCustomer(int id) throws NotFoundException;
 }

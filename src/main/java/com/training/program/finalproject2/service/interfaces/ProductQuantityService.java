@@ -19,4 +19,5 @@ public interface ProductQuantityService {
     ProductQuantity updateProductQuantity(ProductQuantityDto productQuantityDto, int id) throws NotFoundException;
 
     void deleteProductQuantityById(int id) throws NotFoundException;
+    void modifyProductQuantityById(ProductQuantityDto productQuantityDto) throws NotFoundException;
 }

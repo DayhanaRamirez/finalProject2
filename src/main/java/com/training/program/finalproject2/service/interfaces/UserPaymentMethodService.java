@@ -19,4 +19,5 @@ public interface UserPaymentMethodService {
     UserPaymentMethod updateUserPaymentMethod(UserPaymentMethodDto userPaymentMethodDto, int id) throws NotFoundException;
 
     void deleteUserPaymentMethodById(int id) throws NotFoundException;
+    void setActiveUserPaymentMethod(int id) throws NotFoundException;
 }

@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService{
             Customer customer = customerRepository.getReferenceById(id);
             return customerMapper.customerEntityToCustomerDto(customer);
         }catch(EntityNotFoundException e){
-            throw new NotFoundException("Couldn't find a customer with the given id");
+            throw new EntityNotFoundException("Couldn't find a customer with the given id");
         }
     }
 

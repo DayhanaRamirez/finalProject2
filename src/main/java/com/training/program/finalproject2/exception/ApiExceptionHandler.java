@@ -88,5 +88,15 @@ public class ApiExceptionHandler {
                 .build();
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = EntityAlreadyExits.class)
+    public ResponseEntity<Object> handleEntityAlreadyExits(EntityAlreadyExits e) {
+        ApiException apiException = ApiException.builder()
+                .message(e.getMessage())
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .zonedDateTime(ZonedDateTime.now())
+                .build();
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+    }
 }
 

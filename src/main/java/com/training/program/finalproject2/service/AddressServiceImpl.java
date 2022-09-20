@@ -23,7 +23,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDto getAddressById(int id) throws NotFoundException {
-        try{
+        try {
             return addressMapper.addressEntityToAddressDto(addressRepository.getReferenceById(id));
         } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find an address with the given id");
@@ -44,7 +44,7 @@ public class AddressServiceImpl implements AddressService {
     public Address createAddress(AddressDto addressDto) throws AddressAlreadyExistsException {
         Address address = addressMapper.addressDtoToAddressEntity(addressDto);
         if (addressRepository.existsByStreetAndCityAndStateAndCountry(address.getStreet(),
-                address.getCity(), address.getState(), address.getCountry())){
+                address.getCity(), address.getState(), address.getCountry())) {
             throw new AddressAlreadyExistsException("Address already exists");
         }
 
@@ -55,7 +55,7 @@ public class AddressServiceImpl implements AddressService {
     public Address updateAddress(AddressDto addressDto, int id) throws AddressAlreadyExistsException {
         try {
             Address address = addressMapper.addressDtoToAddressEntity(addressDto);
-            if(addressRepository.existsByStreetAndCityAndStateAndCountry(addressDto.getStreet(), addressDto.getCity(), addressDto.getState(), addressDto.getCountry())){
+            if (addressRepository.existsByStreetAndCityAndStateAndCountry(addressDto.getStreet(), addressDto.getCity(), addressDto.getState(), addressDto.getCountry())) {
                 throw new AddressAlreadyExistsException("Address already exists");
             }
 
@@ -63,9 +63,9 @@ public class AddressServiceImpl implements AddressService {
             address.setCity(addressDto.getCity());
             address.setState(addressDto.getState());
             address.setCountry(addressDto.getCountry());
-            return  addressRepository.save(address);
+            return addressRepository.save(address);
 
-        } catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a address with the given id");
         }
     }

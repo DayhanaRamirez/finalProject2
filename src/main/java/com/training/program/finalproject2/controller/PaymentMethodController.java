@@ -1,7 +1,6 @@
 package com.training.program.finalproject2.controller;
 
 import com.training.program.finalproject2.dto.PaymentMethodDto;
-import com.training.program.finalproject2.exception.AddressAlreadyExistsException;
 import com.training.program.finalproject2.exception.NotFoundException;
 import com.training.program.finalproject2.exception.PaymentMethodTypeAlreadyExistException;
 import com.training.program.finalproject2.service.interfaces.PaymentMethodService;
@@ -27,7 +26,7 @@ public class PaymentMethodController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PaymentMethodDto>> getAllPaymentMethods(){
+    public ResponseEntity<List<PaymentMethodDto>> getAllPaymentMethods() {
         return new ResponseEntity<>(paymentMethodService.getAllPaymentMethods(), HttpStatus.OK);
     }
 

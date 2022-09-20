@@ -5,14 +5,13 @@ import com.training.program.finalproject2.entity.CardType;
 import com.training.program.finalproject2.entity.Customer;
 import com.training.program.finalproject2.entity.PaymentMethod;
 import com.training.program.finalproject2.entity.UserPaymentMethod;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @NoArgsConstructor
 public class UserPaymentMethodMapper {
-    public UserPaymentMethod userPaymentMethodDtoToEntity(UserPaymentMethodDto userPaymentMethodDto, CardType cardType, Customer customer, PaymentMethod paymentMethod){
+    public UserPaymentMethod userPaymentMethodDtoToEntity(UserPaymentMethodDto userPaymentMethodDto, CardType cardType, Customer customer, PaymentMethod paymentMethod) {
         return UserPaymentMethod.builder()
                 .cardNumber(userPaymentMethodDto.getCardNumber())
                 .selectedPaymentMethod(userPaymentMethodDto.isActive()).
@@ -22,7 +21,7 @@ public class UserPaymentMethodMapper {
                 .build();
     }
 
-    public UserPaymentMethodDto userPaymentMethodEntityToDto(UserPaymentMethod userPaymentMethod){
+    public UserPaymentMethodDto userPaymentMethodEntityToDto(UserPaymentMethod userPaymentMethod) {
         return UserPaymentMethodDto.builder()
                 .cardNumber(userPaymentMethod.getCardNumber())
                 .isActive(userPaymentMethod.isSelectedPaymentMethod())

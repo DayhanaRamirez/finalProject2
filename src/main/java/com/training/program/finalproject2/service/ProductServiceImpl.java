@@ -1,12 +1,7 @@
 package com.training.program.finalproject2.service;
 
-import com.training.program.finalproject2.dto.AddressDto;
 import com.training.program.finalproject2.dto.ProductDto;
-import com.training.program.finalproject2.entity.Address;
-import com.training.program.finalproject2.entity.Customer;
 import com.training.program.finalproject2.entity.Product;
-import com.training.program.finalproject2.exception.AddressAlreadyExistsException;
-import com.training.program.finalproject2.exception.CreateUserEmailException;
 import com.training.program.finalproject2.exception.NotFoundException;
 import com.training.program.finalproject2.exception.ProductNameException;
 import com.training.program.finalproject2.mapper.ProductMapper;
@@ -28,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getProductById(int id) throws NotFoundException {
-        try{
+        try {
             return productMapper.productEntityToProductDto(productRepository.getReferenceById(id));
         } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a product with the given id");
@@ -48,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product createProduct(ProductDto productDto) throws ProductNameException {
         Product product = productMapper.productDtoToProductEntity(productDto);
-        if (productRepository.findProductByName(productDto.getName()) != null){
+        if (productRepository.findProductByName(productDto.getName()) != null) {
             throw new ProductNameException("Product already exists");
         }
         return productRepository.save(product);
@@ -58,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
     public Product updateProduct(ProductDto productDto, int id) throws ProductNameException {
         try {
             Product product = productRepository.getReferenceById(id);
-            if(productRepository.findProductByName(productDto.getName()) != null){
+            if (productRepository.findProductByName(productDto.getName()) != null) {
                 throw new ProductNameException("Product already exists");
             }
             product.setName(productDto.getName());
@@ -67,16 +62,16 @@ public class ProductServiceImpl implements ProductService {
 
             return productRepository.save(product);
 
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a product with the given id");
         }
     }
 
     @Override
     public void deleteProductById(int id) throws NotFoundException {
-        try{
+        try {
             productRepository.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new NotFoundException("Couldn't find a product with the given id");
         }
     }

@@ -19,7 +19,7 @@ public class LogicServiceImpl implements LogicService {
     private final ProductQuantityService productQuantityService;
     private final ProductService productService;
 
-    public void startCheckout(CheckOutRequest checkOutRequest){
+    public void startCheckout(CheckOutRequest checkOutRequest) {
         CheckoutDto checkoutDto = CheckoutDto.builder().date(LocalDate.now().toString()).idCustomer(checkOutRequest.getIdCustomer()).build();
         Checkout checkout = checkoutService.createCheckout(checkoutDto);
         ProductQuantityDto productQuantityDto = ProductQuantityDto.builder()

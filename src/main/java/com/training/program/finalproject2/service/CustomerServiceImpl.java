@@ -16,7 +16,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
@@ -26,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService{
         try {
             Customer customer = customerRepository.getReferenceById(id);
             return customerMapper.customerEntityToCustomerDto(customer);
-        }catch(EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new EntityNotFoundException("Couldn't find a customer with the given id");
         }
     }
@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService{
     public List<CustomerDto> getAllCustomers() {
         List<Customer> customers = customerRepository.findAll();
         List<CustomerDto> customerDtoList = new ArrayList<>();
-        for(Customer customer : customers){
+        for (Customer customer : customers) {
             customerDtoList.add(customerMapper.customerEntityToCustomerDto(customer));
         }
         return customerDtoList;
@@ -53,23 +53,23 @@ public class CustomerServiceImpl implements CustomerService{
     public Customer updateCustomer(CustomerDto customerDto, int id) throws CreateUserEmailException {
         try {
             Customer customer = customerRepository.getReferenceById(id);
-            if(customerRepository.findCustomerByEmail(customerDto.getEmail()) != null){
+            if (customerRepository.findCustomerByEmail(customerDto.getEmail()) != null) {
                 throw new CreateUserEmailException("A customer already exists with the given email");
             }
             customer.setFirstName(customerDto.getFirstName());
             customer.setLastName(customerDto.getLastName());
             return customerRepository.save(customer);
 
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a customer with the given id");
         }
     }
 
     @Override
     public void deleteCustomerById(int id) throws NotFoundException {
-        try{
+        try {
             customerRepository.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new NotFoundException("Couldn't find a customer with the given id");
         }
     }

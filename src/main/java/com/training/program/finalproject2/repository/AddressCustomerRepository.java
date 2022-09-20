@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface AddressCustomerRepository extends JpaRepository<AddressCustomer, Integer> {
     AddressCustomer findBySelectedAddressTrue();
+
     List<AddressCustomer> findByCustomer(Customer customer);
+
     AddressCustomer findByCustomerAndAddress(Customer customer, Address address);
 }

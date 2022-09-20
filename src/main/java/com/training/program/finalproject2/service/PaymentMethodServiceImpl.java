@@ -1,10 +1,7 @@
 package com.training.program.finalproject2.service;
 
 import com.training.program.finalproject2.dto.PaymentMethodDto;
-import com.training.program.finalproject2.entity.Address;
 import com.training.program.finalproject2.entity.PaymentMethod;
-import com.training.program.finalproject2.entity.Product;
-import com.training.program.finalproject2.exception.AddressAlreadyExistsException;
 import com.training.program.finalproject2.exception.NotFoundException;
 import com.training.program.finalproject2.exception.PaymentMethodTypeAlreadyExistException;
 import com.training.program.finalproject2.mapper.PaymentMethodMapper;
@@ -26,11 +23,11 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
 
     @Override
     public PaymentMethodDto getPaymentMethodDtoById(int id) throws NotFoundException {
-       try{
-           return paymentMethodMapper.paymentMethodEntityToPaymentMethodDto(paymentMethodRepository.getReferenceById(id));
-       } catch (EntityNotFoundException e) {
-           throw new NotFoundException("Couldn't find a payment method with the given id");
-       }
+        try {
+            return paymentMethodMapper.paymentMethodEntityToPaymentMethodDto(paymentMethodRepository.getReferenceById(id));
+        } catch (EntityNotFoundException e) {
+            throw new NotFoundException("Couldn't find a payment method with the given id");
+        }
     }
 
     @Override
@@ -57,22 +54,22 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     public PaymentMethod updatePaymentMethod(PaymentMethodDto paymentMethodDto, int id) throws PaymentMethodTypeAlreadyExistException {
         try {
             PaymentMethod paymentMethod = paymentMethodRepository.getReferenceById(id);
-            if(paymentMethodRepository.findPaymentMethodByType(paymentMethodDto.getType()) != null){
+            if (paymentMethodRepository.findPaymentMethodByType(paymentMethodDto.getType()) != null) {
                 throw new PaymentMethodTypeAlreadyExistException("Payment method type already exist");
             }
             paymentMethod.setType(paymentMethod.getType());
-            return  paymentMethodRepository.save(paymentMethod);
+            return paymentMethodRepository.save(paymentMethod);
 
-        } catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a payment method with the given id");
         }
     }
 
     @Override
     public void deletePaymentMethodById(int id) throws NotFoundException {
-        try{
+        try {
             paymentMethodRepository.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new NotFoundException("Couldn't find a payment method with the given id");
         }
 

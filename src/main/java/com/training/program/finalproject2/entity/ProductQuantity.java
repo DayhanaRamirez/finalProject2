@@ -1,6 +1,5 @@
 package com.training.program.finalproject2.entity;
 
-import com.training.program.finalproject2.mapper.ProductMapper;
 import lombok.*;
 
 import javax.persistence.*;

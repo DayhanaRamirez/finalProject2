@@ -1,8 +1,6 @@
 package com.training.program.finalproject2.service;
 
-import com.training.program.finalproject2.dto.AddressDto;
 import com.training.program.finalproject2.dto.CheckoutDto;
-import com.training.program.finalproject2.entity.Address;
 import com.training.program.finalproject2.entity.Checkout;
 import com.training.program.finalproject2.entity.Customer;
 import com.training.program.finalproject2.exception.NotFoundException;
@@ -28,7 +26,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     @Override
     public CheckoutDto getCheckoutById(int id) throws NotFoundException {
-        try{
+        try {
             return checkoutMapper.checkoutEntityToCheckoutDto(checkoutRepository.getReferenceById(id));
         } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a checkout with the given id");
@@ -47,24 +45,24 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     @Override
     public Checkout createCheckout(CheckoutDto checkoutDto) throws NotFoundException {
-        try{
+        try {
             Customer customer = customerRepository.getReferenceById(checkoutDto.getIdCustomer());
             Checkout checkout = checkoutMapper.checkoutDtoToCheckoutEntity(checkoutDto, customer);
             return checkoutRepository.save(checkout);
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a checkout with the given id");
         }
     }
 
     @Override
     public Checkout updateCheckout(CheckoutDto checkoutDto, int id) throws NotFoundException {
-        try{
+        try {
             Customer customer = customerRepository.getReferenceById(checkoutDto.getIdCustomer());
             Checkout checkout = checkoutRepository.getReferenceById(id);
             checkout.setDate(checkoutDto.getDate());
             checkout.setCustomer(customer);
             return checkoutRepository.save(checkout);
-        } catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a checkout with the given id");
         }
     }

@@ -1,12 +1,8 @@
 package com.training.program.finalproject2.service;
 
-import com.training.program.finalproject2.dto.AddressDto;
 import com.training.program.finalproject2.dto.CardTypeDto;
-import com.training.program.finalproject2.dto.CustomerDto;
 import com.training.program.finalproject2.entity.CardType;
-import com.training.program.finalproject2.entity.Customer;
 import com.training.program.finalproject2.exception.CardTypeAlreadyExistException;
-import com.training.program.finalproject2.exception.CreateUserEmailException;
 import com.training.program.finalproject2.exception.NotFoundException;
 import com.training.program.finalproject2.mapper.CardTypeMapper;
 import com.training.program.finalproject2.repository.CardTypeRepository;
@@ -30,7 +26,7 @@ public class CardTypeServiceImpl implements CardTypeService {
         try {
             CardType cardType = cardTypeRepository.getReferenceById(id);
             return cardTypeMapper.cardTypeEntityToCardTypeDto(cardType);
-        }catch(EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a card type with the given id");
         }
     }
@@ -39,7 +35,7 @@ public class CardTypeServiceImpl implements CardTypeService {
     public List<CardTypeDto> getAllCardTypes() {
         List<CardType> cardTypes = cardTypeRepository.findAll();
         List<CardTypeDto> cardTypeDtoList = new ArrayList<>();
-        for(CardType cardType : cardTypes){
+        for (CardType cardType : cardTypes) {
             cardTypeDtoList.add(cardTypeMapper.cardTypeEntityToCardTypeDto(cardType));
         }
         return cardTypeDtoList;
@@ -57,13 +53,13 @@ public class CardTypeServiceImpl implements CardTypeService {
     public CardType updateCardType(CardTypeDto cardTypeDto, int id) throws CardTypeAlreadyExistException {
         try {
             CardType cardType = cardTypeRepository.getReferenceById(id);
-            if(cardTypeRepository.findCardTypeByType(cardTypeDto.getType()) != null){
+            if (cardTypeRepository.findCardTypeByType(cardTypeDto.getType()) != null) {
                 throw new CardTypeAlreadyExistException("A card type already exists with the given type");
             }
             cardType.setType(cardTypeDto.getType());
             return cardTypeRepository.save(cardType);
 
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a card type with the given id");
         }
     }

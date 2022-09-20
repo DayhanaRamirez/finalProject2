@@ -1,8 +1,6 @@
 package com.training.program.finalproject2.controller;
 
-import com.training.program.finalproject2.dto.CustomerDto;
 import com.training.program.finalproject2.dto.MyOrderDto;
-import com.training.program.finalproject2.exception.CreateUserEmailException;
 import com.training.program.finalproject2.exception.NotFoundException;
 import com.training.program.finalproject2.service.interfaces.MyOrderService;
 import lombok.AllArgsConstructor;
@@ -33,7 +31,7 @@ public class MyOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> createMyOrder(@Valid @RequestBody MyOrderDto myOrderDto) throws NotFoundException{
+    public ResponseEntity<HttpStatus> createMyOrder(@Valid @RequestBody MyOrderDto myOrderDto) throws NotFoundException {
         myOrderService.createMyOrder(myOrderDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

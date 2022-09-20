@@ -26,12 +26,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAllProducts()  {
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
         return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> createProduct(@Valid @RequestBody ProductDto productDto) throws ProductNameException  {
+    public ResponseEntity<HttpStatus> createProduct(@Valid @RequestBody ProductDto productDto) throws ProductNameException {
         productService.createProduct(productDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

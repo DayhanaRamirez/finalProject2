@@ -1,8 +1,6 @@
 package com.training.program.finalproject2.controller;
 
 import com.training.program.finalproject2.dto.AddressCustomerDto;
-import com.training.program.finalproject2.dto.AddressDto;
-import com.training.program.finalproject2.exception.AddressAlreadyExistsException;
 import com.training.program.finalproject2.exception.NotFoundException;
 import com.training.program.finalproject2.service.interfaces.AddressCustomerService;
 import lombok.AllArgsConstructor;
@@ -38,7 +36,7 @@ public class AddressCustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> updateAddressCustomer(@PathVariable("id") int id, @Valid @RequestBody AddressCustomerDto addressCustomerDto) throws NotFoundException{
+    public ResponseEntity<HttpStatus> updateAddressCustomer(@PathVariable("id") int id, @Valid @RequestBody AddressCustomerDto addressCustomerDto) throws NotFoundException {
         addressCustomerService.updateAddressCustomer(addressCustomerDto, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

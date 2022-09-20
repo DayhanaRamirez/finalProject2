@@ -2,14 +2,13 @@ package com.training.program.finalproject2.mapper;
 
 import com.training.program.finalproject2.dto.AddressDto;
 import com.training.program.finalproject2.entity.Address;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @NoArgsConstructor
 public class AddressMapper {
-    public Address addressDtoToAddressEntity(AddressDto addressDto){
+    public Address addressDtoToAddressEntity(AddressDto addressDto) {
         return Address.builder()
                 .street(addressDto.getStreet())
                 .city(addressDto.getCity())
@@ -18,7 +17,7 @@ public class AddressMapper {
                 .build();
     }
 
-    public AddressDto addressEntityToAddressDto(Address address){
+    public AddressDto addressEntityToAddressDto(Address address) {
         return AddressDto.builder()
                 .street(address.getStreet())
                 .city(address.getCity())

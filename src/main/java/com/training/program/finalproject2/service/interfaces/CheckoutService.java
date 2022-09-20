@@ -1,16 +1,13 @@
 package com.training.program.finalproject2.service.interfaces;
 
-import com.training.program.finalproject2.dto.AddressDto;
 import com.training.program.finalproject2.dto.CheckoutDto;
-import com.training.program.finalproject2.entity.Address;
 import com.training.program.finalproject2.entity.Checkout;
-import com.training.program.finalproject2.exception.AddressAlreadyExistsException;
 import com.training.program.finalproject2.exception.NotFoundException;
 
 import java.util.List;
 
 public interface CheckoutService {
-    Checkout createCheckout (CheckoutDto checkoutDto) throws NotFoundException;
+    Checkout createCheckout(CheckoutDto checkoutDto) throws NotFoundException;
 
     CheckoutDto getCheckoutById(int id) throws NotFoundException;
 

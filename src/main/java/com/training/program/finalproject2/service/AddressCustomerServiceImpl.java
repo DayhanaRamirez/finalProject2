@@ -30,7 +30,7 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
 
     @Override
     public AddressCustomerDto getAddressCustomerById(int id) throws NotFoundException {
-        try{
+        try {
             return addressCustomerMapper.addressCustomerEntityToAddressCustomerDto(addressCustomerRepository.getReferenceById(id));
         } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find an addressCustomer with the given id");
@@ -50,7 +50,7 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
     @Override
     public AddressCustomer createAddressCustomer(AddressCustomerDto addressCustomerDto) throws NotFoundException {
 
-        try{
+        try {
             Address address = addressRepository.getReferenceById(addressCustomerDto.getIdAddress());
             Customer customer = customerRepository.getReferenceById(addressCustomerDto.getIdCustomer());
 
@@ -59,13 +59,13 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
             List<AddressCustomer> list = addressCustomerRepository.findByCustomer(customer);
             AddressCustomer addressCustomer = addressCustomerMapper.addressCustomerDtoToAddressCustomerEntity(addressCustomerDto, address, customer);
 
-            if (list.isEmpty()){
+            if (list.isEmpty()) {
                 addressCustomer.setSelectedAddress(true);
             } else {
                 addressCustomer.setSelectedAddress(false);
             }
             return addressCustomerRepository.save(addressCustomer);
-        } catch (Exception e){
+        } catch (Exception e) {
             if (e.getClass() == DataIntegrityViolationException.class) {
                 throw new EntityNotFoundException("Couldn't find an address or customer with the given IDs");
             } else {
@@ -74,19 +74,19 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
         }
     }
 
-    private void checkEntity(Address address, Customer customer){
-        try{
-            if(addressCustomerRepository.findByCustomerAndAddress(customer, address) != null) {
+    private void checkEntity(Address address, Customer customer) {
+        try {
+            if (addressCustomerRepository.findByCustomerAndAddress(customer, address) != null) {
                 throw new EntityAlreadyExits("User already has that address");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new EntityAlreadyExits("Couldn't find an address or customer with the given IDs");
         }
     }
 
     @Override
     public AddressCustomer updateAddressCustomer(AddressCustomerDto addressCustomerDto, int id) throws NotFoundException {
-        try{
+        try {
             Address address = addressRepository.getReferenceById(addressCustomerDto.getIdAddress());
             Customer customer = customerRepository.getReferenceById(addressCustomerDto.getIdCustomer());
             AddressCustomer addressCustomer = addressCustomerRepository.getReferenceById(id);
@@ -95,16 +95,16 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
             addressCustomer.setAddress(address);
 
             return addressCustomerRepository.save(addressCustomer);
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new EntityNotFoundException("Couldn't find an address or customer with the given IDs");
         }
     }
 
     @Override
     public void deleteAddressCustomerById(int id) throws NotFoundException {
-        try{
+        try {
             addressCustomerRepository.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new EntityNotFoundException("Couldn't find an addressCustomer with the given id");
         }
     }
@@ -120,7 +120,7 @@ public class AddressCustomerServiceImpl implements AddressCustomerService {
 
             addressCustomerRepository.save(oldAddress);
             addressCustomerRepository.save(newAddress);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new NotFoundException("Couldn't find an addressCustomer with the given id");
         }
     }

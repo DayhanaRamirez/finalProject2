@@ -1,10 +1,8 @@
 package com.training.program.finalproject2.service;
 
 import com.training.program.finalproject2.dto.MyOrderDto;
-import com.training.program.finalproject2.dto.ProductDto;
 import com.training.program.finalproject2.entity.Checkout;
 import com.training.program.finalproject2.entity.MyOrder;
-import com.training.program.finalproject2.entity.Product;
 import com.training.program.finalproject2.exception.NotFoundException;
 import com.training.program.finalproject2.mapper.MyOrderMapper;
 import com.training.program.finalproject2.repository.CheckoutRepository;
@@ -28,7 +26,7 @@ public class MyOrderServiceImpl implements MyOrderService {
 
     @Override
     public MyOrderDto getMyOrderById(int id) throws NotFoundException {
-        try{
+        try {
             return myOrderMapper.myOrderEntityToDto(myOrderRepository.getReferenceById(id));
         } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find an order with the given id");
@@ -47,11 +45,11 @@ public class MyOrderServiceImpl implements MyOrderService {
 
     @Override
     public MyOrder createMyOrder(MyOrderDto myOrderDto) throws NotFoundException {
-        try{
+        try {
             Checkout checkout = checkoutRepository.getReferenceById(myOrderDto.getIdCheckout());
             MyOrder myOrder = myOrderMapper.myOrderDtoToEntity(myOrderDto, checkout);
             return myOrderRepository.save(myOrder);
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find an order with the given id");
         }
     }
@@ -71,9 +69,9 @@ public class MyOrderServiceImpl implements MyOrderService {
 
     @Override
     public void deleteMyOrderById(int id) throws NotFoundException {
-        try{
+        try {
             myOrderRepository.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new NotFoundException("Couldn't find an order product with the given id");
         }
 

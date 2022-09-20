@@ -1,11 +1,12 @@
 package com.training.program.finalproject2.service;
 
-import com.training.program.finalproject2.dto.ProductDto;
 import com.training.program.finalproject2.dto.UserPaymentMethodDto;
-import com.training.program.finalproject2.entity.*;
+import com.training.program.finalproject2.entity.CardType;
+import com.training.program.finalproject2.entity.Customer;
+import com.training.program.finalproject2.entity.PaymentMethod;
+import com.training.program.finalproject2.entity.UserPaymentMethod;
 import com.training.program.finalproject2.exception.EntityAlreadyExits;
 import com.training.program.finalproject2.exception.NotFoundException;
-import com.training.program.finalproject2.exception.ProductNameException;
 import com.training.program.finalproject2.mapper.UserPaymentMethodMapper;
 import com.training.program.finalproject2.repository.CardTypeRepository;
 import com.training.program.finalproject2.repository.CustomerRepository;
@@ -31,7 +32,7 @@ public class UserPaymentMethodServiceImpl implements UserPaymentMethodService {
 
     @Override
     public UserPaymentMethodDto getUserPaymentMethodById(int id) throws NotFoundException {
-        try{
+        try {
             return userPaymentMethodMapper.userPaymentMethodEntityToDto(userPaymentMethodRepository.getReferenceById(id));
         } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find an userPaymentMethod with the given id");
@@ -50,8 +51,8 @@ public class UserPaymentMethodServiceImpl implements UserPaymentMethodService {
     }
 
     @Override
-    public UserPaymentMethod createUserPaymentMethod(UserPaymentMethodDto userPaymentMethodDto) throws NotFoundException  {
-        try{
+    public UserPaymentMethod createUserPaymentMethod(UserPaymentMethodDto userPaymentMethodDto) throws NotFoundException {
+        try {
             CardType cardType = cardTypeRepository.getReferenceById(userPaymentMethodDto.getIdCardType());
             Customer customer = customerRepository.getReferenceById(userPaymentMethodDto.getIdCustomer());
             PaymentMethod paymentMethod = paymentMethodRepository.getReferenceById(userPaymentMethodDto.getIdPaymentMethod());
@@ -59,9 +60,9 @@ public class UserPaymentMethodServiceImpl implements UserPaymentMethodService {
             checkEntity(cardType, customer, paymentMethod, userPaymentMethodDto.getCardNumber());
 
             List<UserPaymentMethod> list = userPaymentMethodRepository.findByCustomer(customer);
-            UserPaymentMethod userPaymentMethod = userPaymentMethodMapper.userPaymentMethodDtoToEntity(userPaymentMethodDto, cardType, customer, paymentMethod );
+            UserPaymentMethod userPaymentMethod = userPaymentMethodMapper.userPaymentMethodDtoToEntity(userPaymentMethodDto, cardType, customer, paymentMethod);
 
-            if (list.isEmpty()){
+            if (list.isEmpty()) {
                 userPaymentMethod.setSelectedPaymentMethod(true);
             } else {
                 userPaymentMethod.setSelectedPaymentMethod(false);
@@ -77,12 +78,12 @@ public class UserPaymentMethodServiceImpl implements UserPaymentMethodService {
         }
     }
 
-    private void checkEntity(CardType cardType, Customer customer, PaymentMethod paymentMethod, String cardNumber){
-        try{
-            if(userPaymentMethodRepository.findByCardTypeAndCustomerAndPaymentMethodAndCardNumber(cardType, customer, paymentMethod, cardNumber) != null) {
+    private void checkEntity(CardType cardType, Customer customer, PaymentMethod paymentMethod, String cardNumber) {
+        try {
+            if (userPaymentMethodRepository.findByCardTypeAndCustomerAndPaymentMethodAndCardNumber(cardType, customer, paymentMethod, cardNumber) != null) {
                 throw new EntityAlreadyExits("Customer already has a payment method with that card type");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new EntityAlreadyExits("A payment method with that card type and number already exist");
         }
     }
@@ -101,16 +102,16 @@ public class UserPaymentMethodServiceImpl implements UserPaymentMethodService {
             userPaymentMethod.setPaymentMethod(paymentMethod);
             return userPaymentMethodRepository.save(userPaymentMethod);
 
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find an userPaymentMethod  with the given IDs");
         }
     }
 
     @Override
     public void deleteUserPaymentMethodById(int id) throws NotFoundException {
-        try{
+        try {
             userPaymentMethodRepository.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new NotFoundException("Couldn't find an userPaymentMethod with the given id");
         }
     }
@@ -126,7 +127,7 @@ public class UserPaymentMethodServiceImpl implements UserPaymentMethodService {
 
             userPaymentMethodRepository.save(oldPaymentMethod);
             userPaymentMethodRepository.save(newPaymentMethod);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new NotFoundException("Couldn't find an addressCustomer with the given id");
         }
     }

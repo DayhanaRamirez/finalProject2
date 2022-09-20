@@ -1,9 +1,7 @@
 package com.training.program.finalproject2.controller;
 
-import com.training.program.finalproject2.dto.ProductDto;
 import com.training.program.finalproject2.dto.ProductQuantityDto;
 import com.training.program.finalproject2.exception.NotFoundException;
-import com.training.program.finalproject2.exception.ProductNameException;
 import com.training.program.finalproject2.service.interfaces.ProductQuantityService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,19 +20,18 @@ public class ProductQuantityController {
 
     private final ProductQuantityService productQuantityService;
 
-
     @GetMapping("/{id}")
     public ResponseEntity<ProductQuantityDto> getProductQuantityById(@PathVariable("id") int id) throws NotFoundException {
         return new ResponseEntity<>(productQuantityService.getProductQuantityById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductQuantityDto>> getALlProductQuantity()  {
+    public ResponseEntity<List<ProductQuantityDto>> getALlProductQuantity() {
         return new ResponseEntity<>(productQuantityService.getAllProductQuantity(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> createProductQuantity(@Valid @RequestBody ProductQuantityDto productQuantityDto) throws NotFoundException{
+    public ResponseEntity<HttpStatus> createProductQuantity(@Valid @RequestBody ProductQuantityDto productQuantityDto) throws NotFoundException {
         productQuantityService.createProductQuantity(productQuantityDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

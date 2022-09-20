@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "paymentMethod")
-public class PaymentMethod  implements Serializable {
+public class PaymentMethod implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -38,5 +37,4 @@ public class Address implements Serializable {
 
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AddressCustomer> addressCustomers;
-
 }

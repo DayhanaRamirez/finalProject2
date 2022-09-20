@@ -3,7 +3,6 @@ package com.training.program.finalproject2.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Getter

@@ -1,9 +1,7 @@
 package com.training.program.finalproject2.controller;
 
 import com.training.program.finalproject2.dto.CheckoutDto;
-import com.training.program.finalproject2.dto.PaymentMethodDto;
 import com.training.program.finalproject2.exception.NotFoundException;
-import com.training.program.finalproject2.exception.PaymentMethodTypeAlreadyExistException;
 import com.training.program.finalproject2.service.interfaces.CheckoutService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +25,7 @@ public class CheckoutController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CheckoutDto>> getAllCheckouts(){
+    public ResponseEntity<List<CheckoutDto>> getAllCheckouts() {
         return new ResponseEntity<>(checkoutService.getAllCheckouts(), HttpStatus.OK);
     }
 
@@ -38,7 +36,7 @@ public class CheckoutController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> updateCheckout(@PathVariable("id") int id, @Valid @RequestBody CheckoutDto checkoutDto)  throws NotFoundException {
+    public ResponseEntity<HttpStatus> updateCheckout(@PathVariable("id") int id, @Valid @RequestBody CheckoutDto checkoutDto) throws NotFoundException {
         checkoutService.updateCheckout(checkoutDto, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

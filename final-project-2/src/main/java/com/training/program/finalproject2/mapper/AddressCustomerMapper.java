@@ -16,14 +16,14 @@ public class AddressCustomerMapper {
 
     public AddressCustomer addressCustomerDtoToAddressCustomerEntity(AddressCustomerDto addressCustomerDto, Address address, Customer customer){
         return AddressCustomer.builder()
-                .active(addressCustomerDto.isActive())
+                .selectedAddress(addressCustomerDto.isActive())
                 .address(address)
                 .customer(customer)
                 .build();
     }
 
     public AddressCustomerDto addressCustomerEntityToAddressCustomerDto(AddressCustomer addressCustomer){
-        return AddressCustomerDto.builder().active(addressCustomer.isActive())
+        return AddressCustomerDto.builder().active(addressCustomer.isSelectedAddress())
                 .build();
     }
 }

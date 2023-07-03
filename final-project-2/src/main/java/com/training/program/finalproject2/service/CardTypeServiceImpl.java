@@ -73,7 +73,7 @@ public class CardTypeServiceImpl implements CardTypeService {
         try {
             cardTypeRepository.deleteById(id);
         } catch (Exception e) {
-            throw new NotFoundException("\"Couldn't find a card type with the given id");
+            throw new NotFoundException("Couldn't find a card type with the given id");
         }
 
     }

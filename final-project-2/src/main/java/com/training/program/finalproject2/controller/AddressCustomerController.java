@@ -48,4 +48,10 @@ public class AddressCustomerController {
         addressCustomerService.deleteAddressCustomerById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/active/{id_address}")
+    public ResponseEntity<HttpStatus> setActiveAddressCustomer(@PathVariable("id_address") int id) throws NotFoundException {
+        addressCustomerService.setActiveAddressCustomer(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -7,16 +7,19 @@ import com.training.program.finalproject2.entity.AddressCustomer;
 import com.training.program.finalproject2.exception.AddressAlreadyExistsException;
 import com.training.program.finalproject2.exception.NotFoundException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public interface AddressCustomerService {
     AddressCustomer createAddressCustomer (AddressCustomerDto addressCustomerDto) throws NotFoundException;
 
-    AddressCustomerDto getAddressCustomerById(int id) throws NotFoundException;
+    AddressCustomerDto getAddressCustomerById(int id) throws EntityNotFoundException;
 
     List<AddressCustomerDto> getAllAddressCustomer();
 
     AddressCustomer updateAddressCustomer(AddressCustomerDto addressCustomerDto, int id) throws NotFoundException;
 
     void deleteAddressCustomerById(int id) throws NotFoundException;
+
+    void setActiveAddressCustomer(int id) throws NotFoundException;
 }

@@ -15,7 +15,7 @@ public class UserPaymentMethodMapper {
     public UserPaymentMethod userPaymentMethodDtoToEntity(UserPaymentMethodDto userPaymentMethodDto, CardType cardType, Customer customer, PaymentMethod paymentMethod){
         return UserPaymentMethod.builder()
                 .cardNumber(userPaymentMethodDto.getCardNumber())
-                .active(userPaymentMethodDto.isActive()).
+                .selectedPaymentMethod(userPaymentMethodDto.isActive()).
                 cardType(cardType)
                 .customer(customer)
                 .paymentMethod(paymentMethod)
@@ -25,7 +25,7 @@ public class UserPaymentMethodMapper {
     public UserPaymentMethodDto userPaymentMethodEntityToDto(UserPaymentMethod userPaymentMethod){
         return UserPaymentMethodDto.builder()
                 .cardNumber(userPaymentMethod.getCardNumber())
-                .isActive(userPaymentMethod.isActive())
+                .isActive(userPaymentMethod.isSelectedPaymentMethod())
                 .idCardType(userPaymentMethod.getCardType().getId())
                 .idCustomer(userPaymentMethod.getCustomer().getId())
                 .idPaymentMethod(userPaymentMethod.getPaymentMethod().getId())

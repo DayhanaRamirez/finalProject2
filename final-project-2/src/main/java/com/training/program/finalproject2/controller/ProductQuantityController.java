@@ -50,4 +50,10 @@ public class ProductQuantityController {
         productQuantityService.deleteProductQuantityById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/modify")
+    public ResponseEntity<HttpStatus> modifyProductQuantity(@Valid @RequestBody ProductQuantityDto productQuantityDto) throws NotFoundException {
+        productQuantityService.modifyProductQuantityById(productQuantityDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

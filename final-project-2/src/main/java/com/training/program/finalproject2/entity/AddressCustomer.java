@@ -18,8 +18,8 @@ public class AddressCustomer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "activeAddress")
-    private boolean active;
+    @Column(name = "selectedAddress")
+    private boolean selectedAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_address")

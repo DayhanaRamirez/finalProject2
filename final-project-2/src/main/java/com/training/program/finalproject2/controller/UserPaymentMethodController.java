@@ -48,4 +48,10 @@ public class UserPaymentMethodController {
         userPaymentMethodService.deleteUserPaymentMethodById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/active/{id_paymentmethod}")
+    public ResponseEntity<HttpStatus> setActiveUserPaymentMethod(@PathVariable("id_paymentmethod") int id) throws NotFoundException {
+        userPaymentMethodService.setActiveUserPaymentMethod(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

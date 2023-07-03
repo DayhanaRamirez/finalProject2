@@ -22,8 +22,8 @@ public class UserPaymentMethod implements Serializable {
     @NotBlank(message = "Card number is required")
     private String cardNumber;
 
-    @Column(name = "activePaymentMethod")
-    private boolean active;
+    @Column(name = "selectedPaymentMethod")
+    private boolean selectedPaymentMethod;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_paymentMethod")

@@ -5,12 +5,13 @@ import com.training.program.finalproject2.entity.Address;
 import com.training.program.finalproject2.exception.AddressAlreadyExistsException;
 import com.training.program.finalproject2.exception.NotFoundException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public interface AddressService {
     Address createAddress(AddressDto addressDto) throws AddressAlreadyExistsException;
 
-    AddressDto getAddressById(int id) throws NotFoundException;
+    AddressDto getAddressById(int id) throws EntityNotFoundException;
 
     List<AddressDto> getAllAddresses();
 

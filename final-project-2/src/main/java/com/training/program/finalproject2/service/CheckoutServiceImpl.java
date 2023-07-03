@@ -65,7 +65,7 @@ public class CheckoutServiceImpl implements CheckoutService {
             checkout.setCustomer(customer);
             return checkoutRepository.save(checkout);
         } catch(EntityNotFoundException e) {
-            throw new NotFoundException("Couldn't find a checkout with the given id");
+            throw new EntityNotFoundException("Couldn't find a user or checkout with the given id");
         }
     }
 
@@ -73,8 +73,8 @@ public class CheckoutServiceImpl implements CheckoutService {
     public void deleteCheckoutById(int id) throws NotFoundException {
         try {
             checkoutRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new NotFoundException("Couldn't find a checkout with the given id");
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Couldn't find a checkout with the given id");
         }
     }
 }

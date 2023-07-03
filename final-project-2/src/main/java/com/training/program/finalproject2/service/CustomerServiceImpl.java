@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService{
             Customer customer = customerRepository.getReferenceById(id);
             return customerMapper.customerEntityToCustomerDto(customer);
         }catch(EntityNotFoundException e){
-            throw new NotFoundException("Couldn't find a customer with the given id");
+            throw new EntityNotFoundException("Couldn't find a customer with the given id");
         }
     }
 
@@ -52,16 +52,18 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public Customer updateCustomer(CustomerDto customerDto, int id) throws CreateUserEmailException {
         try {
-            Customer customer = customerRepository.getReferenceById(id);
+            Customer customer = customerMapper.customerDtoToCustomerEntity(customerDto);
             if(customerRepository.findCustomerByEmail(customerDto.getEmail()) != null){
                 throw new CreateUserEmailException("A customer already exists with the given email");
             }
+
+            customer.setId(id);
             customer.setFirstName(customerDto.getFirstName());
             customer.setLastName(customerDto.getLastName());
             return customerRepository.save(customer);
 
         }catch (EntityNotFoundException e){
-            throw new NotFoundException("Couldn't find a customer with the given id");
+            throw new EntityNotFoundException("Couldn't find a customer with the given id");
         }
     }
 

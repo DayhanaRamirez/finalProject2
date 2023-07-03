@@ -22,11 +22,11 @@ public class AddressServiceImpl implements AddressService {
     private final AddressMapper addressMapper;
 
     @Override
-    public AddressDto getAddressById(int id) throws NotFoundException {
+    public AddressDto getAddressById(int id) throws EntityNotFoundException {
         try{
             return addressMapper.addressEntityToAddressDto(addressRepository.getReferenceById(id));
         } catch (EntityNotFoundException e) {
-            throw new NotFoundException("Couldn't find an address with the given id");
+            throw new EntityNotFoundException("Couldn't find an address with the given id");
         }
     }
 
@@ -55,15 +55,16 @@ public class AddressServiceImpl implements AddressService {
     public Address updateAddress(AddressDto addressDto, int id) throws AddressAlreadyExistsException {
         try {
             Address address = addressMapper.addressDtoToAddressEntity(addressDto);
-            if(addressRepository.existsByStreetAndCityAndStateAndCountry(addressDto.getStreet(), addressDto.getCity(), addressDto.getState(), addressDto.getCountry())){
+            if(addressRepository.existsByStreetAndCityAndStateAndCountry(addressDto.getStreet(), addressDto.getCity(), addressDto.getState(), addressDto.getCountry())) {
                 throw new AddressAlreadyExistsException("Address already exists");
             }
 
+            address.setId(id);
             address.setStreet(addressDto.getStreet());
             address.setCity(addressDto.getCity());
             address.setState(addressDto.getState());
             address.setCountry(addressDto.getCountry());
-            return  addressRepository.save(address);
+            return addressRepository.save(address);
 
         } catch(EntityNotFoundException e) {
             throw new NotFoundException("Couldn't find a address with the given id");
@@ -74,8 +75,8 @@ public class AddressServiceImpl implements AddressService {
     public void deleteAddressById(int id) throws NotFoundException {
         try {
             addressRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new NotFoundException("Couldn't find a address with the given id");
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Couldn't find a address with the given id");
         }
     }
 }
